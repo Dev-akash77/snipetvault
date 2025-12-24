@@ -1,0 +1,1 @@
+ALTER TABLE "tasks" ALTER COLUMN "task" SET DATA TYPE varchar(255);
