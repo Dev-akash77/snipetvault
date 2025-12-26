@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 @Controller('user')
 export class UserController {
@@ -8,7 +9,7 @@ export class UserController {
 
 // ! CREAT POST
  @Post()
- creatUser(@Body() data:any){
+ creatUser(@Body() data:CreateTaskDto){
     return this.userService.createUser(data);
  };
 // ! GET ALL POST

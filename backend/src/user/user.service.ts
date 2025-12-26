@@ -1,16 +1,24 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {  Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { tasks } from '../database/schema';
 import { eq } from 'drizzle-orm';
+import { injection_token } from '../constants/constant';
+import { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import * as schema from '../database/schema';
+import { CreateTaskDto } from './dto/create-task.dto';
 
 @Injectable()
 export class UserService {
-  constructor(@Inject('DB') private readonly db: any) {}
+  constructor(
+    @Inject(injection_token.DB_CONNECTION)
+    private readonly db: NodePgDatabase<typeof schema>,
+  ) {}
 
-  async createUser(data: any) {
+  async createUser(data: CreateTaskDto) {
     const newUser = await this.db
       .insert(tasks)
       .values({
         task: data.name,
+        check: data.check,
       })
       .returning();
 
@@ -22,14 +30,26 @@ export class UserService {
   }
 
   async getUserById(id: string) {
-    return await this.db.select().from(tasks).where(eq(tasks.id, id));
+  const task = await this.db
+    .select()
+    .from(tasks)
+    .where(eq(tasks.id, id))
+    .limit(1);
+
+  if (task.length === 0) {
+    throw new NotFoundException(`Task with id ${id} not found`);
+  }
+
+  return task[0];
+
   }
 
   async deletePost(id: string) {
-    const user = await this.db
+    const task = await this.db
       .delete(tasks)
       .where(eq(tasks.id, id))
       .returning();
-    return { user, message: `${id} deleted` };
+
+    return { task, message: `${id} deleted` };
   }
 }
