@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createDatabase } from '.';
-import { injection_token } from '../constants/constant';
+import { injection_token } from '../common/constants/constant';
 
 @Global()
 @Module({

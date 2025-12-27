@@ -1,7 +1,7 @@
 import {  Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { tasks } from '../database/schema';
 import { eq } from 'drizzle-orm';
-import { injection_token } from '../constants/constant';
+import { injection_token } from '../common/constants/constant';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import * as schema from '../database/schema';
 import { CreateTaskDto } from './dto/create-task.dto';
