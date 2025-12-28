@@ -25,6 +25,7 @@ export class UserController {
     return this.userService.getUserById(id);
  }
 //  ! DELETE POST
+@successMessage('Task Deleted successfully')
  @Delete(":id")
  deletePost(@Param('id') id:string){
     return this.userService.deletePost(id);

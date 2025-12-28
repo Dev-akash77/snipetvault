@@ -19,7 +19,7 @@ export class ResponseInterceptor  implements NestInterceptor {
     const message =
       this.reflector.get<string>(SUCCESS_MESSAGE_KEY, handler) ||
       this.reflector.get<string>(SUCCESS_MESSAGE_KEY, controller) ||
-      'Request  successfull';
+      'Request successfull';
 
     return next.handle().pipe(
       map((data) => ({
