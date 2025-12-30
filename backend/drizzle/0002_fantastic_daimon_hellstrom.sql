@@ -1,0 +1,7 @@
+CREATE TABLE "users" (
+	"id" uuid DEFAULT gen_random_uuid() NOT NULL,
+	"name" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL,
+	"password" varchar NOT NULL,
+	CONSTRAINT "users_email_unique" UNIQUE("email")
+);

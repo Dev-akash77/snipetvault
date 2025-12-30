@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { successMessage } from '../common/decorators/success-message.decorator';
+import { successMessage } from '../../common/decorators/success-message.decorator';
 
 @Controller('user')
 export class UserController {
@@ -9,7 +9,7 @@ export class UserController {
 
 
 // ! CREAT POST
-@successMessage('Task created successfully')
+@successMessage('Task created successfully') 
  @Post()
  creatUser(@Body() data:CreateTaskDto){
     return this.userService.createUser(data);

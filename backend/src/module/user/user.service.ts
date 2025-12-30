@@ -2,16 +2,15 @@ import {
   HttpStatus,
   Inject,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
-import { tasks } from '../database/schema';
 import { eq } from 'drizzle-orm';
-import { injection_token } from '../common/constants/constant';
+import { injection_token } from '../../common/constants/constant';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import * as schema from '../database/schema';
+import * as schema from '../../database/schema';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { AppException } from '../common/exceptions/app.exception';
-import { ErrorCode } from '../common/constants/error-code';
+import { AppException } from '../../common/exceptions/app.exception';
+import { ErrorCode } from '../../common/constants/error-code';
+import { tasks } from '../../database/schema';
 
 @Injectable()
 export class UserService {
@@ -64,13 +63,13 @@ export class UserService {
         ErrorCode.NOT_FOUND,
         ['Task Not Found'],
       );
-    } 
+    }
 
     return task[0];
   }
 
   async deletePost(id: string) {
-   await this.getUserById(id); 
+    await this.getUserById(id);
 
     const task = await this.db
       .delete(tasks)
