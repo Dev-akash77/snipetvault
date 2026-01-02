@@ -1,4 +1,4 @@
-import { User } from "../../domain/user.model";
+import { User } from "../../domain/user.entity";
 
 export interface UserRepositoryPort{
     findEmail(email:string): Promise<User | null>,
@@ -6,4 +6,4 @@ export interface UserRepositoryPort{
 }
 
 // ! INJECT TOKEN
-export const USER_REPO_TOKEN = "USER_REPO_TOKEN";
+export const USER_REPO_TOKEN = Symbol("USER_REPO_TOKEN");
