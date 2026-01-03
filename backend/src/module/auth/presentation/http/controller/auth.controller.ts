@@ -1,16 +1,27 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { successMessage } from '../../../../../common/decorators/success-message.decorator';
-import { RegisterUseCase } from '../../../application/use-cases/register.use-case';
+import { RegisterUseCase } from '../../../application/usecases/register.use-case';
+import { RegisterDto } from '../dtos/register.dto';
+import { LoginUsecase } from '../../../application/usecases/login.use-caes';
+import { LoginDto } from './../dtos/login.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly registerUseCase: RegisterUseCase) {}
+  constructor(private readonly registerUseCase: RegisterUseCase,private readonly loginUseCase:  LoginUsecase) {}
 
   // ! CREAT USER
   @successMessage('User Registered successfully')
-  @Post()
-  register(@Body() data: any) {
-    return this.registerUseCase.execute(data);
+  @Post('/register')
+  register(@Body() dto: RegisterDto) {
+    return this.registerUseCase.execute(dto);
+  }
+
+  // ! Login USER
+  @successMessage('User Login successfully')
+  @Post('/login')
+  login(@Body() dto: LoginDto) {
+    return this.loginUseCase.execute(dto);
   }
 
 }
+ 

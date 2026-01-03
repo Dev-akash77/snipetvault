@@ -1,4 +1,4 @@
-import {Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserRepositoryPort } from '../../../application/ports/user.repositary.port';
 import { injection_token } from '../../../../../common/constants/constant';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
@@ -13,7 +13,6 @@ export class DrizzleUserRepository implements UserRepositoryPort {
     private readonly db: NodePgDatabase<typeof schema>,
   ) {}
 
-
   // ! FIND BY EMAIL
   async findEmail(email: string): Promise<User | null> {
     const result = await this.db
@@ -21,14 +20,21 @@ export class DrizzleUserRepository implements UserRepositoryPort {
       .from(schema.users)
       .where(eq(schema.users.email, email));
 
-
     return result.length > 0 ? result[0] : null;
-
   }
 
   // ! CREATE USER
   async createUser(user: User): Promise<User> {
     const result = await this.db.insert(schema.users).values(user).returning();
     return result[0];
+  }
+
+  // !FIND BY ID
+  async findById(id: string): Promise<User | null> {
+    const result = await this.db
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.id, id));
+    return result.length ? result[0] : null;
   }
 }

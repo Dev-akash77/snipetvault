@@ -7,7 +7,7 @@ export interface TokenPayload {
 
 
 export interface TokenServicePort {
-    generateToken(payload: TokenPayload): Promise<string | null>,
+    generateToken(payload: TokenPayload): Promise<string>,
     verifyToken(token:string): Promise<TokenPayload | null>
 }
 
