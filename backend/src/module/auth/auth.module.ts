@@ -11,9 +11,12 @@ import { jwtConfig } from './infrastructure/config/jwt.config';
 import { TOKEN_SERVICE_TOKEN } from './application/ports/token.service.port';
 import { JwtTokenService } from './infrastructure/adapters/services/jwt-token.service';
 import { LoginUsecase } from './application/usecases/login.use-caes';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 
 @Module({
   imports: [
+    PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule.forFeature(jwtConfig)],
       inject: [jwtConfig.KEY],
@@ -26,6 +29,7 @@ import { LoginUsecase } from './application/usecases/login.use-caes';
   providers: [
     RegisterUseCase,
     LoginUsecase,
+    JwtStrategy,
     {
       provide: USER_REPO_TOKEN,
       useClass: DrizzleUserRepository,

@@ -14,6 +14,7 @@ import {
 import { LoginUserInput } from '../contracts/login.contract copy';
 import { AppException } from '../../../../common/exceptions/app.exception';
 import { ErrorCode } from '../../../../common/constants/error-code';
+import { JwtPayload } from '../contracts/jwt-payload.contract';
 
 @Injectable()
 export class LoginUsecase {
@@ -45,7 +46,7 @@ export class LoginUsecase {
       );
     }
 
-    const payload = {
+    const payload:JwtPayload = { 
       userId: String(exist.id),
       role: exist.role,
       email:exist.email
